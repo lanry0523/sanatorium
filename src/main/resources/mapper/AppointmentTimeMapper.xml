@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yun.sanatorium.dao.AppointmentTimeMapper">
+  <resultMap id="BaseResultMap" type="com.yun.sanatorium.model.entity.AppointmentTime">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="start_time" jdbcType="VARCHAR" property="startTime" />
+    <result column="end_time" jdbcType="VARCHAR" property="endTime" />
+    <result column="week" jdbcType="VARCHAR" property="week" />
+    <result column="appointments_numbers" jdbcType="VARCHAR" property="appointmentsNumbers" />
+  </resultMap>
+</mapper>

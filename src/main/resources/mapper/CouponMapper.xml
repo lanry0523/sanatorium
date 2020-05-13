@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yun.sanatorium.dao.CouponMapper">
+  <resultMap id="BaseResultMap" type="com.yun.sanatorium.model.entity.Coupon">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="amount_available" jdbcType="VARCHAR" property="amountAvailable" />
+    <result column="coupon_amount" jdbcType="VARCHAR" property="couponAmount" />
+    <result column="effective_time" jdbcType="VARCHAR" property="effectiveTime" />
+    <result column="points" jdbcType="INTEGER" property="points" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="is_receive" jdbcType="INTEGER" property="isReceive" />
+  </resultMap>
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yun.sanatorium.dao.OrderMapper">
+  <resultMap id="BaseResultMap" type="com.yun.sanatorium.model.entity.Order">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="store_name" jdbcType="VARCHAR" property="storeName" />
+    <result column="appointment_project" jdbcType="VARCHAR" property="appointmentProject" />
+    <result column="amount" jdbcType="VARCHAR" property="amount" />
+    <result column="discount" jdbcType="VARCHAR" property="discount" />
+    <result column="coupon_credit" jdbcType="VARCHAR" property="couponCredit" />
+    <result column="pay_amount" jdbcType="VARCHAR" property="payAmount" />
+    <result column="arrival_time" jdbcType="VARCHAR" property="arrivalTime" />
+    <result column="project_time" jdbcType="VARCHAR" property="projectTime" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="payment_type" jdbcType="INTEGER" property="paymentType" />
+    <result column="personal_id" jdbcType="VARCHAR" property="personalId" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+  </resultMap>
+</mapper>

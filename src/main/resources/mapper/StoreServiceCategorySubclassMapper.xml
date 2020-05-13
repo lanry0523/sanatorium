@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yun.sanatorium.dao.StoreServiceCategorySubclassMapper">
+  <resultMap id="BaseResultMap" type="com.yun.sanatorium.model.entity.StoreServiceCategorySubclass">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="store_id" jdbcType="VARCHAR" property="storeId" />
+    <result column="store_name" jdbcType="VARCHAR" property="storeName" />
+    <result column="service_category_id" jdbcType="VARCHAR" property="serviceCategoryId" />
+    <result column="service_category_name" jdbcType="VARCHAR" property="serviceCategoryName" />
+    <result column="service_category_subclass_id" jdbcType="VARCHAR" property="serviceCategorySubclassId" />
+    <result column="service_category_subclass_name" jdbcType="VARCHAR" property="serviceCategorySubclassName" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+</mapper>

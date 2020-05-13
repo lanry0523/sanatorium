@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yun.sanatorium.dao.ServiceItemMapper">
+  <resultMap id="BaseResultMap" type="com.yun.sanatorium.model.entity.ServiceItem">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="synopsis" jdbcType="VARCHAR" property="synopsis" />
+    <result column="duration" jdbcType="INTEGER" property="duration" />
+    <result column="service_category_id" jdbcType="VARCHAR" property="serviceCategoryId" />
+    <result column="service_category_name" jdbcType="VARCHAR" property="serviceCategoryName" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="integral" jdbcType="INTEGER" property="integral" />
+    <result column="group_buy_status" jdbcType="VARCHAR" property="groupBuyStatus" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+</mapper>

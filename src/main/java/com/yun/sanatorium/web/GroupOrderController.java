@@ -32,7 +32,7 @@ public class GroupOrderController {
 
     @PostMapping("/delete")
     public Result delete(@RequestParam String id) {
-        groupOrderService.deleteById(id);
+        groupOrderService.deleteByPrimaryKey(id);
         return ResultGenerator.genSuccessResult();
     }
 

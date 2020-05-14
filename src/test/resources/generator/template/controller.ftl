@@ -30,8 +30,8 @@ public class ${modelNameUpperCamel}Controller {
         return ResultGenerator.genSuccessResult();
     }
 
-    @PostMapping("/delete")
-    public Result delete(@RequestParam String id) {
+    @PostMapping("/deleteByPrimaryKey")
+    public Result deleteByPrimaryKey(@RequestParam String id) {
         ${modelNameLowerCamel}Service.deleteById(id);
         return ResultGenerator.genSuccessResult();
     }

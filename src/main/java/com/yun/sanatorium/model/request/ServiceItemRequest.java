@@ -1,26 +1,23 @@
-package com.yun.sanatorium.model.entity;
+package com.yun.sanatorium.model.request;
 
+import com.yun.sanatorium.model.entity.Attachment;
 import lombok.Data;
 
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
- * @title:ServiceItem
- * @description:服务项目表
+ * @title:ServiceItemRequest
+ * @description:服务项目表request请求类
  * @author:CodeGenerator
  * @date:2020/05/13 17:57:44
  */
 @Data
-@Table(name = "service_item")
-public class ServiceItem implements Serializable {
+public class ServiceItemRequest implements Serializable {
 
     /**
      * 主键id
      */
-    @Id
     private String id;
 
     /**
@@ -77,4 +74,9 @@ public class ServiceItem implements Serializable {
      * 更新时间
      */
     private String updateTime;
+
+    /**
+     * 缩略图
+     */
+    private Attachment attachmentLogo;
 }

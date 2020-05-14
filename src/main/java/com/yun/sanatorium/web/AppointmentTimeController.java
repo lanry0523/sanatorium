@@ -32,7 +32,7 @@ public class AppointmentTimeController {
 
     @PostMapping("/delete")
     public Result delete(@RequestParam String id) {
-        appointmentTimeService.deleteById(id);
+        appointmentTimeService.deleteByPrimaryKey(id);
         return ResultGenerator.genSuccessResult();
     }
 

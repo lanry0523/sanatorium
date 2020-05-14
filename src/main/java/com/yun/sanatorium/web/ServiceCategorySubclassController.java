@@ -37,7 +37,7 @@ public class ServiceCategorySubclassController {
 
     @PostMapping("/delete")
     public Result delete(@RequestParam String id) {
-        serviceCategorySubclassService.deleteById(id);
+        serviceCategorySubclassService.deleteByPrimaryKey(id);
         return ResultGenerator.genSuccessResult();
     }
 

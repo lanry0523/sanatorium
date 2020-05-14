@@ -1,25 +1,23 @@
-package com.yun.sanatorium.model.entity;
+package com.yun.sanatorium.model.request;
 
+import com.yun.sanatorium.model.entity.Store;
 import lombok.Data;
 
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.List;
 
 /**
- * @title:StoreServicePersonal
- * @description:服务人员表
+ * @title:StoreServicePersonalRequest
+ * @description:服务人员表request请求类
  * @author:CodeGenerator
  * @date:2020/05/13 17:57:44
  */
 @Data
-@Table(name = "store_service_personal")
-public class StoreServicePersonal implements Serializable {
+public class StoreServicePersonalRequest implements Serializable {
 
     /**
      * 主键id
      */
-    @Id
     private String id;
 
     /**
@@ -51,4 +49,9 @@ public class StoreServicePersonal implements Serializable {
      * 更新时间
      */
     private String updateTime;
+
+    /**
+     * 适用门店
+     */
+    private List<Store> storeList;
 }

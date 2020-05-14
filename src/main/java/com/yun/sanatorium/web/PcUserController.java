@@ -32,7 +32,7 @@ public class PcUserController {
 
     @PostMapping("/delete")
     public Result delete(@RequestParam String id) {
-        pcUserService.deleteById(id);
+        pcUserService.deleteByPrimaryKey(id);
         return ResultGenerator.genSuccessResult();
     }
 

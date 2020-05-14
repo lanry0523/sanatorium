@@ -32,7 +32,7 @@ public class AttachmentController {
 
     @PostMapping("/delete")
     public Result delete(@RequestParam String id) {
-        attachmentService.deleteById(id);
+        attachmentService.deleteByPrimaryKey(id);
         return ResultGenerator.genSuccessResult();
     }
 

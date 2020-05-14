@@ -41,7 +41,7 @@ public abstract class AbstractService<T> implements Service<T> {
     }
 
     @Override
-    public Integer deleteById(String id) {
+    public Integer deleteByPrimaryKey(String id) {
         return mapper.deleteByPrimaryKey(id);
     }
 

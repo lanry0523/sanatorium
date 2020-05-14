@@ -32,7 +32,7 @@ public class ServicePersonalController {
 
     @PostMapping("/delete")
     public Result delete(@RequestParam String id) {
-        servicePersonalService.deleteById(id);
+        servicePersonalService.deleteByPrimaryKey(id);
         return ResultGenerator.genSuccessResult();
     }
 

@@ -43,7 +43,7 @@ public class StoreController {
         if (null == request || StringUtils.isBlank(request.getId())) {
             return ResultGenerator.genSuccessResult(ResultCode.FAIL);
         }
-        storeService.deleteById(request.getId());
+        storeService.deleteByPrimaryKey(request.getId());
         return ResultGenerator.genSuccessResult();
     }
 

@@ -32,7 +32,7 @@ public class AppletUserController {
 
     @PostMapping("/delete")
     public Result delete(@RequestParam String id) {
-        appletUserService.deleteById(id);
+        appletUserService.deleteByPrimaryKey(id);
         return ResultGenerator.genSuccessResult();
     }
 

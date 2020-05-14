@@ -32,7 +32,7 @@ public class StoreServiceCategoryController {
 
     @PostMapping("/delete")
     public Result delete(@RequestParam String id) {
-        storeServiceCategoryService.deleteById(id);
+        storeServiceCategoryService.deleteByPrimaryKey(id);
         return ResultGenerator.genSuccessResult();
     }
 

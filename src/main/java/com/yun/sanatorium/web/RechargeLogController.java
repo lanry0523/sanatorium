@@ -32,7 +32,7 @@ public class RechargeLogController {
 
     @PostMapping("/delete")
     public Result delete(@RequestParam String id) {
-        rechargeLogService.deleteById(id);
+        rechargeLogService.deleteByPrimaryKey(id);
         return ResultGenerator.genSuccessResult();
     }
 

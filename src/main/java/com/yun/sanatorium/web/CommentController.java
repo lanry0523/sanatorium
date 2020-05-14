@@ -32,7 +32,7 @@ public class CommentController {
 
     @PostMapping("/delete")
     public Result delete(@RequestParam String id) {
-        commentService.deleteById(id);
+        commentService.deleteByPrimaryKey(id);
         return ResultGenerator.genSuccessResult();
     }
 

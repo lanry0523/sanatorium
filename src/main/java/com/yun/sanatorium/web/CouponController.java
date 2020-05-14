@@ -32,7 +32,7 @@ public class CouponController {
 
     @PostMapping("/delete")
     public Result delete(@RequestParam String id) {
-        couponService.deleteById(id);
+        couponService.deleteByPrimaryKey(id);
         return ResultGenerator.genSuccessResult();
     }
 

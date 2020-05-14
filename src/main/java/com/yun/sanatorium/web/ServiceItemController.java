@@ -1,11 +1,13 @@
 package com.yun.sanatorium.web;
 
-import com.yun.sanatorium.core.Result;
-import com.yun.sanatorium.core.ResultGenerator;
-import com.yun.sanatorium.model.entity.ServiceItem;
-import com.yun.sanatorium.service.ServiceItemService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yun.sanatorium.core.Result;
+import com.yun.sanatorium.core.ResultCode;
+import com.yun.sanatorium.core.ResultGenerator;
+import com.yun.sanatorium.model.entity.ServiceItem;
+import com.yun.sanatorium.model.request.ServiceItemRequest;
+import com.yun.sanatorium.service.ServiceItemService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -13,7 +15,7 @@ import java.util.List;
 
 /**
  * @title:ServiceItemController
- * @description:**表controller层接口
+ * @description:服务项目表controller层接口
  * @author:CodeGenerator
  * @date:2020/05/13 18:00:33
  */
@@ -24,15 +26,18 @@ public class ServiceItemController {
     @Resource
     private ServiceItemService serviceItemService;
 
-    @PostMapping("/add")
-    public Result add(@RequestBody ServiceItem serviceItem) {
-        serviceItemService.save(serviceItem);
+    @PostMapping("/save")
+    public Result save(@RequestBody ServiceItemRequest request) {
+        if (null == request) {
+            return ResultGenerator.genSuccessResult(ResultCode.FAIL);
+        }
+        serviceItemService.save(request);
         return ResultGenerator.genSuccessResult();
     }
 
-    @PostMapping("/delete")
-    public Result delete(@RequestParam String id) {
-        serviceItemService.deleteById(id);
+    @PostMapping("/deleteByPrimaryKey")
+    public Result deleteByPrimaryKey(@RequestParam String id) {
+        serviceItemService.deleteByPrimaryKey(id);
         return ResultGenerator.genSuccessResult();
     }
 

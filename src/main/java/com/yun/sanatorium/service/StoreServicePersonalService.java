@@ -5,7 +5,7 @@ import com.yun.sanatorium.core.Service;
 
 /**
  * @title:StoreServicePersonalService
- * @description:**表service层接口
+ * @description:服务人员表service层接口
  * @author:CodeGenerator
  * @date:2020/05/13 17:58:33
  */

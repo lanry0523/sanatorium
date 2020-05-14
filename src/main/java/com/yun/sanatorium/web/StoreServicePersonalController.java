@@ -1,11 +1,11 @@
 package com.yun.sanatorium.web;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.yun.sanatorium.core.Result;
 import com.yun.sanatorium.core.ResultGenerator;
 import com.yun.sanatorium.model.entity.StoreServicePersonal;
 import com.yun.sanatorium.service.StoreServicePersonalService;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * @title:StoreServicePersonalController
- * @description:**表controller层接口
+ * @description:服务人员表controller层接口
  * @author:CodeGenerator
  * @date:2020/05/13 17:58:33
  */
@@ -32,7 +32,7 @@ public class StoreServicePersonalController {
 
     @PostMapping("/delete")
     public Result delete(@RequestParam String id) {
-        storeServicePersonalService.deleteById(id);
+        storeServicePersonalService.deleteByPrimaryKey(id);
         return ResultGenerator.genSuccessResult();
     }
 

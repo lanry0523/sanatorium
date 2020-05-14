@@ -35,7 +35,7 @@ public interface Service<T> {
      * @param id
      * @return
      */
-    Integer deleteById(String id);
+    Integer deleteByPrimaryKey(String id);
 
     /**
      * 批量刪除 eg：ids -> “1,2,3,4”

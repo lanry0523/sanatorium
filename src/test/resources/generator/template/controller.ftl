@@ -18,7 +18,7 @@ import java.util.List;
  * @date:${date}
  */
 @RestController
-@RequestMapping("${baseRequestMapping}")
+@RequestMapping("${modelNameUpperCamel}")
 public class ${modelNameUpperCamel}Controller {
 
     @Resource

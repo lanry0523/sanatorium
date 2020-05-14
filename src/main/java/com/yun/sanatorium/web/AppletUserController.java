@@ -18,7 +18,7 @@ import java.util.List;
  * @date:2020/05/13 17:50:25
  */
 @RestController
-@RequestMapping("/applet/user")
+@RequestMapping("/appletUser")
 public class AppletUserController {
 
     @Resource

@@ -18,7 +18,7 @@ import java.util.List;
  * @date:2020/05/13 17:53:20
  */
 @RestController
-@RequestMapping("/coupon/user")
+@RequestMapping("/couponUser")
 public class CouponUserController {
 
     @Resource

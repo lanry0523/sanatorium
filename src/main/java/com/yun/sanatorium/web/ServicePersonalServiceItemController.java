@@ -18,7 +18,7 @@ import java.util.List;
  * @date:2020/05/13 17:57:24
  */
 @RestController
-@RequestMapping("/service/personal/service/item")
+@RequestMapping("/servicePersonalServiceItem")
 public class ServicePersonalServiceItemController {
 
     @Resource

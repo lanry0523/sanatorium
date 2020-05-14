@@ -18,7 +18,7 @@ import java.util.List;
  * @date:2020/05/13 17:55:47
  */
 @RestController
-@RequestMapping("/recharge/log")
+@RequestMapping("/rechargeLog")
 public class RechargeLogController {
 
     @Resource

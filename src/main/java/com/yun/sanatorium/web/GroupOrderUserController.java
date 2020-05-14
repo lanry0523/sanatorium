@@ -18,7 +18,7 @@ import java.util.List;
  * @date:2020/05/13 17:53:56
  */
 @RestController
-@RequestMapping("/group/order/user")
+@RequestMapping("/groupOrderUser")
 public class GroupOrderUserController {
 
     @Resource

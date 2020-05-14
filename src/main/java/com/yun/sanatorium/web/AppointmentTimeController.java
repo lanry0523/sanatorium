@@ -18,7 +18,7 @@ import java.util.List;
  * @date:2020/05/13 17:52:06
  */
 @RestController
-@RequestMapping("/appointment/time")
+@RequestMapping("/appointmentTime")
 public class AppointmentTimeController {
 
     @Resource

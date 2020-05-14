@@ -18,7 +18,7 @@ import java.util.List;
  * @date:2020/05/13 17:55:03
  */
 @RestController
-@RequestMapping("/pc/user")
+@RequestMapping("/pcUser")
 public class PcUserController {
 
     @Resource
@@ -43,8 +43,8 @@ public class PcUserController {
     }
 
     @PostMapping("/detail")
-    public Result detail(@RequestParam String id) {
-        PcUser pcUser = pcUserService.findById(id);
+    public Result detail(@RequestBody PcUser request) {
+        PcUser pcUser = pcUserService.findById(request.getId());
         return ResultGenerator.genSuccessResult(pcUser);
     }
 

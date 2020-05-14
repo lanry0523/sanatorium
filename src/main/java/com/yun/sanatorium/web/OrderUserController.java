@@ -18,7 +18,7 @@ import java.util.List;
  * @date:2020/05/13 17:54:34
  */
 @RestController
-@RequestMapping("/order/user")
+@RequestMapping("/orderUser")
 public class OrderUserController {
 
     @Resource

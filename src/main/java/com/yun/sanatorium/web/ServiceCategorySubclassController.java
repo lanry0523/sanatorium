@@ -18,7 +18,7 @@ import java.util.List;
  * @date:2020/05/13 17:56:42
  */
 @RestController
-@RequestMapping("/service/category/subclass")
+@RequestMapping("/serviceCategorySubclass")
 public class ServiceCategorySubclassController {
 
     @Resource

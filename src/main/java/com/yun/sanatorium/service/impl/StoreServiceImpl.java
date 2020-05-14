@@ -5,6 +5,7 @@ import com.yun.sanatorium.dao.StoreMapper;
 import com.yun.sanatorium.model.entity.Store;
 import com.yun.sanatorium.model.request.StoreRequest;
 import com.yun.sanatorium.model.vo.StoreVo;
+import com.yun.sanatorium.service.AttachmentService;
 import com.yun.sanatorium.service.StoreService;
 import com.yun.sanatorium.utils.DateUtils;
 import com.yun.sanatorium.utils.Util;
@@ -27,31 +28,35 @@ import javax.annotation.Resource;
 public class StoreServiceImpl extends AbstractService<Store> implements StoreService {
 
     @Resource
+    private AttachmentService attachmentService;
+
+    @Resource
     private StoreMapper storeMapper;
 
     @Override
-    public Integer save(StoreRequest request) {
+    public void save(StoreRequest request) {
 
         // 1.初始化操作
         Store store = new Store();
         String id = Util.getUUID();
         String createTime = DateUtils.getCurrentTime();
 
-        // 2.编辑数据
-
-        // 2.1 门店基础数据
+        // 2.编辑门店基础数据
         BeanUtils.copyProperties(request, store);
         store.setId(id);
         store.setCreateTime(createTime);
 
-        // 2.2 TODO
-
         // 3.更新数据库
-        return storeMapper.insert(store);
+
+        // 3.1 更新门店表
+        storeMapper.insert(store);
+
+        // TODO
+        // 3.2 更新
     }
 
     @Override
-    public Integer updateByPrimaryKeySelective(StoreRequest request) {
+    public void updateByPrimaryKeySelective(StoreRequest request) {
 
         // 1.初始化操作
         Store store = new Store();
@@ -68,7 +73,6 @@ public class StoreServiceImpl extends AbstractService<Store> implements StoreSer
         // 2.2 TODO
 
         // 3.更新数据库
-        return storeMapper.updateByPrimaryKeySelective(store);
     }
 
     @Override

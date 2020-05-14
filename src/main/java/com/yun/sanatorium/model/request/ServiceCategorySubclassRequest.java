@@ -1,25 +1,23 @@
-package com.yun.sanatorium.model.entity;
+package com.yun.sanatorium.model.request;
 
+import com.yun.sanatorium.model.entity.Store;
 import lombok.Data;
 
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.List;
 
 /**
- * @title:ServiceCategorySubclass
- * @description:服务类别子类表
+ * @title:ServiceCategorySubclassRequest
+ * @description:服务类别子类表request请求类
  * @author:prince
  * @date:2020/5/14 11:21
  */
 @Data
-@Table(name = "service_category_subclass")
-public class ServiceCategorySubclass implements Serializable {
+public class ServiceCategorySubclassRequest implements Serializable {
 
     /**
      * 主键id
      */
-    @Id
     private String id;
 
     /**
@@ -51,4 +49,9 @@ public class ServiceCategorySubclass implements Serializable {
      * 更新时间
      */
     private String updateTime;
+
+    /**
+     * 适用门店
+     */
+    private List<Store> storeList;
 }

@@ -1,11 +1,11 @@
 package com.yun.sanatorium.web;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.yun.sanatorium.core.Result;
 import com.yun.sanatorium.core.ResultGenerator;
 import com.yun.sanatorium.model.entity.StoreServiceCategory;
 import com.yun.sanatorium.service.StoreServiceCategoryService;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * @title:StoreServiceCategoryController
- * @description:**表controller层接口
+ * @description:门店关联服务类别顶级分类表controller层接口
  * @author:CodeGenerator
  * @date:2020/05/13 17:57:44
  */

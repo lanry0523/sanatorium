@@ -3,15 +3,17 @@ package com.yun.sanatorium.model.entity;
 import lombok.Data;
 
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
- * @title:StoreRequest
- * @description:门店表实体类
+ * @title:Store
+ * @description:门店表
  * @author:prince
  * @date:2020/5/14 11:21
  */
 @Data
+@Table(name = "store")
 public class Store implements Serializable {
 
     /**

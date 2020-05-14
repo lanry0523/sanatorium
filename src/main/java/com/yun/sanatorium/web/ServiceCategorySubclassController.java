@@ -1,11 +1,13 @@
 package com.yun.sanatorium.web;
 
-import com.yun.sanatorium.core.Result;
-import com.yun.sanatorium.core.ResultGenerator;
-import com.yun.sanatorium.model.entity.ServiceCategorySubclass;
-import com.yun.sanatorium.service.ServiceCategorySubclassService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yun.sanatorium.core.Result;
+import com.yun.sanatorium.core.ResultCode;
+import com.yun.sanatorium.core.ResultGenerator;
+import com.yun.sanatorium.model.entity.ServiceCategorySubclass;
+import com.yun.sanatorium.model.request.ServiceCategorySubclassRequest;
+import com.yun.sanatorium.service.ServiceCategorySubclassService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -13,7 +15,7 @@ import java.util.List;
 
 /**
  * @title:ServiceCategorySubclassController
- * @description:**表controller层接口
+ * @description:服务类别子类表controller层接口
  * @author:CodeGenerator
  * @date:2020/05/13 17:56:42
  */
@@ -25,8 +27,11 @@ public class ServiceCategorySubclassController {
     private ServiceCategorySubclassService serviceCategorySubclassService;
 
     @PostMapping("/add")
-    public Result add(@RequestBody ServiceCategorySubclass serviceCategorySubclass) {
-        serviceCategorySubclassService.save(serviceCategorySubclass);
+    public Result add(@RequestBody ServiceCategorySubclassRequest request) {
+        if (null == request) {
+            return ResultGenerator.genSuccessResult(ResultCode.FAIL);
+        }
+        serviceCategorySubclassService.save(request);
         return ResultGenerator.genSuccessResult();
     }
 

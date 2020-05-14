@@ -1,11 +1,14 @@
 package com.yun.sanatorium.web;
 
-import com.yun.sanatorium.core.Result;
-import com.yun.sanatorium.core.ResultGenerator;
-import com.yun.sanatorium.model.entity.ServiceCategory;
-import com.yun.sanatorium.service.ServiceCategoryService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yun.sanatorium.core.Result;
+import com.yun.sanatorium.core.ResultCode;
+import com.yun.sanatorium.core.ResultGenerator;
+import com.yun.sanatorium.model.entity.ServiceCategory;
+import com.yun.sanatorium.model.request.ServiceCategoryRequest;
+import com.yun.sanatorium.service.ServiceCategoryService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -13,7 +16,7 @@ import java.util.List;
 
 /**
  * @title:ServiceCategoryController
- * @description:**表controller层接口
+ * @description:服务类别顶级分类表controller层接口
  * @author:CodeGenerator
  * @date:2020/05/13 17:56:18
  */
@@ -24,21 +27,27 @@ public class ServiceCategoryController {
     @Resource
     private ServiceCategoryService serviceCategoryService;
 
-    @PostMapping("/add")
-    public Result add(@RequestBody ServiceCategory serviceCategory) {
-        serviceCategoryService.save(serviceCategory);
+    @PostMapping("/save")
+    public Result save(@RequestBody ServiceCategoryRequest request) {
+        if (null == request) {
+            return ResultGenerator.genSuccessResult(ResultCode.FAIL);
+        }
+        serviceCategoryService.save(request);
         return ResultGenerator.genSuccessResult();
     }
 
-    @PostMapping("/delete")
-    public Result delete(@RequestParam String id) {
+    @PostMapping("/deleteById")
+    public Result deleteById(@RequestParam String id) {
         serviceCategoryService.deleteById(id);
         return ResultGenerator.genSuccessResult();
     }
 
     @PostMapping("/update")
-    public Result update(ServiceCategory serviceCategory) {
-        serviceCategoryService.update(serviceCategory);
+    public Result update(@RequestBody ServiceCategoryRequest request) {
+        if (null == request || StringUtils.isBlank(request.getId())) {
+            return ResultGenerator.genSuccessResult(ResultCode.FAIL);
+        }
+        serviceCategoryService.update(request);
         return ResultGenerator.genSuccessResult();
     }
 

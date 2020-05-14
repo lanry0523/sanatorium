@@ -17,17 +17,15 @@ public interface StoreService extends Service<Store> {
      * 添加门店
      *
      * @param request
-     * @return
      */
-    Integer save(StoreRequest request);
+    void save(StoreRequest request);
 
     /**
      * 修改门店信息
      *
      * @param request
-     * @return
      */
-    Integer updateByPrimaryKeySelective(StoreRequest request);
+    void updateByPrimaryKeySelective(StoreRequest request);
 
     /**
      * 根据id查询数据

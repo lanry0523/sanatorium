@@ -33,7 +33,7 @@ public class CodeGenerator {
     // 模板位置
     private static final String TEMPLATE_FILE_PATH = PROJECT_PATH + "/src/test/resources/generator/template";
 
-    // ava文件路径
+    // ava文件路径2
     private static final String JAVA_PATH = "/src/main/java";
     // 资源文件路径
     private static final String RESOURCES_PATH = "/src/main/resources";

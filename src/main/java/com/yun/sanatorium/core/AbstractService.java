@@ -31,28 +31,28 @@ public abstract class AbstractService<T> implements Service<T> {
     }
 
     @Override
-    public void save(T model) {
-        mapper.insertSelective(model);
+    public Integer save(T model) {
+        return mapper.insertSelective(model);
     }
 
     @Override
-    public void save(List<T> models) {
-        mapper.insertList(models);
+    public Integer save(List<T> models) {
+        return mapper.insertList(models);
     }
 
     @Override
-    public void deleteById(String id) {
-        mapper.deleteByPrimaryKey(id);
+    public Integer deleteById(String id) {
+        return mapper.deleteByPrimaryKey(id);
     }
 
     @Override
-    public void deleteByIds(String ids) {
-        mapper.deleteByIds(ids);
+    public Integer deleteByIds(String ids) {
+        return mapper.deleteByIds(ids);
     }
 
     @Override
-    public void update(T model) {
-        mapper.updateByPrimaryKeySelective(model);
+    public Integer update(T model) {
+        return mapper.updateByPrimaryKeySelective(model);
     }
 
     @Override

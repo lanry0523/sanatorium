@@ -1,23 +1,23 @@
-package com.yun.sanatorium.model.entity;
+package com.yun.sanatorium.model.request;
 
+import com.yun.sanatorium.model.entity.Attachment;
 import lombok.Data;
 
-import javax.persistence.Id;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @title:StoreRequest
- * @description:门店表实体类
+ * @description:门店管理request请求类
  * @author:prince
  * @date:2020/5/14 11:21
  */
 @Data
-public class Store implements Serializable {
+public class StoreRequest implements Serializable {
 
     /**
      * 主键id
      */
-    @Id
     private String id;
 
     /**
@@ -56,12 +56,17 @@ public class Store implements Serializable {
     private String storeProfile;
 
     /**
-     * 创建时间
+     * 缩略图
      */
-    private String createTime;
+    private Attachment attachmentLogo;
 
     /**
-     * 更新时间
+     * 简介页面相册
      */
-    private String updateTime;
+    private List<Attachment> attachmentAlbumList;
+
+    /**
+     * 简介页面硬件设施
+     */
+    private List<Attachment> attachmentFacilitiesList;
 }

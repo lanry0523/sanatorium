@@ -1,19 +1,24 @@
 package com.yun.sanatorium.web;
 
 import com.yun.sanatorium.core.Result;
+import com.yun.sanatorium.core.ResultCode;
 import com.yun.sanatorium.core.ResultGenerator;
 import com.yun.sanatorium.model.entity.Store;
+import com.yun.sanatorium.model.request.StoreRequest;
+import com.yun.sanatorium.model.vo.StoreVo;
 import com.yun.sanatorium.service.StoreService;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import org.springframework.web.bind.annotation.*;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 /**
  * @title:StoreController
- * @description:**表controller层接口
+ * @description:门店表controller层接口
  * @author:CodeGenerator
  * @date:2020/05/13 17:44:34
  */
@@ -24,35 +29,46 @@ public class StoreController {
     @Resource
     private StoreService storeService;
 
-    @PostMapping("/add")
-    public Result add(@RequestBody Store store) {
-        storeService.save(store);
+    @PostMapping("/save")
+    public Result save(@RequestBody StoreRequest request) {
+        if (null == request) {
+            return ResultGenerator.genSuccessResult(ResultCode.FAIL);
+        }
+        storeService.save(request);
         return ResultGenerator.genSuccessResult();
     }
 
-    @PostMapping("/delete")
-    public Result delete(@RequestParam String id) {
-        storeService.deleteById(id);
+    @PostMapping("/deleteById")
+    public Result deleteById(@RequestBody StoreRequest request) {
+        if (null == request || StringUtils.isBlank(request.getId())) {
+            return ResultGenerator.genSuccessResult(ResultCode.FAIL);
+        }
+        storeService.deleteById(request.getId());
         return ResultGenerator.genSuccessResult();
     }
 
-    @PostMapping("/update")
-    public Result update(Store store) {
-        storeService.update(store);
+    @PostMapping("/updateByPrimaryKeySelective")
+    public Result updateByPrimaryKeySelective(@RequestBody StoreRequest request) {
+        if (null == request || StringUtils.isBlank(request.getId())) {
+            return ResultGenerator.genSuccessResult(ResultCode.FAIL);
+        }
+        storeService.updateByPrimaryKeySelective(request);
         return ResultGenerator.genSuccessResult();
     }
 
-    @PostMapping("/detail")
-    public Result detail(@RequestParam String id) {
-        Store store = storeService.findById(id);
-        return ResultGenerator.genSuccessResult(store);
+    @PostMapping("/findVoById")
+    public Result findVoById(@RequestBody StoreRequest request) {
+        if (null == request || StringUtils.isBlank(request.getId())) {
+            return ResultGenerator.genSuccessResult(ResultCode.FAIL);
+        }
+        StoreVo storeVo = storeService.findVoById(request.getId());
+        return ResultGenerator.genSuccessResult(storeVo);
     }
 
-    @PostMapping("/list")
-    public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
-        PageHelper.startPage(page, size);
+    @PostMapping("/findAll")
+    public Result findAll() {
         List<Store> list = storeService.findAll();
-        PageInfo pageInfo = new PageInfo(list);
-        return ResultGenerator.genSuccessResult(pageInfo);
+        return ResultGenerator.genSuccessResult(list);
     }
+
 }

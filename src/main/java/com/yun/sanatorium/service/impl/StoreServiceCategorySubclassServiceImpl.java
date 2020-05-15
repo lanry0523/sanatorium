@@ -24,7 +24,6 @@ import java.util.List;
  * @author:CodeGenerator
  * @date:2020/05/13 17:58:01
  */
-@Log4j2
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class StoreServiceCategorySubclassServiceImpl extends AbstractService<StoreServiceCategorySubclass> implements StoreServiceCategorySubclassService {

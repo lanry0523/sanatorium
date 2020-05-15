@@ -21,7 +21,6 @@ import javax.annotation.Resource;
  * @author:CodeGenerator
  * @date:2020/05/13 17:56:42
  */
-@Log4j2
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class ServiceCategorySubclassServiceImpl extends AbstractService<ServiceCategorySubclass> implements ServiceCategorySubclassService {

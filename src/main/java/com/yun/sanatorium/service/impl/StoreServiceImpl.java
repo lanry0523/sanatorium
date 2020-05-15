@@ -22,7 +22,6 @@ import javax.annotation.Resource;
  * @author:CodeGenerator
  * @date:2020/05/13 17:44:34
  */
-@Log4j2
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class StoreServiceImpl extends AbstractService<Store> implements StoreService {

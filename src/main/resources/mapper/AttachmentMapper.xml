@@ -13,4 +13,22 @@
     <result column="create_time" jdbcType="VARCHAR" property="createTime" />
     <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
   </resultMap>
+
+
+  <insert id="batchSaveAttachmentList" parameterType="java.util.List" useGeneratedKeys="false">
+    insert into attachment
+    (id,relation_id,url,type,name,stage_type,create_time,update_time)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.id},
+      #{item.relationId},
+      #{item.url},
+      #{item.type},
+      #{item.name},
+      #{item.createTime},
+      #{item.updateTime}
+      )
+    </foreach>
+  </insert>
 </mapper>

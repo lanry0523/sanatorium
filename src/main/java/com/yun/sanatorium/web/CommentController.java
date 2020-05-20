@@ -3,6 +3,7 @@ package com.yun.sanatorium.web;
 import com.yun.sanatorium.core.Result;
 import com.yun.sanatorium.core.ResultGenerator;
 import com.yun.sanatorium.model.entity.Comment;
+import com.yun.sanatorium.model.request.CommentRequest;
 import com.yun.sanatorium.service.CommentService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -52,6 +53,14 @@ public class CommentController {
     public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
         PageHelper.startPage(page, size);
         List<Comment> list = commentService.findAll();
+        PageInfo pageInfo = new PageInfo(list);
+        return ResultGenerator.genSuccessResult(pageInfo);
+    }
+
+    @PostMapping("/listByCondition")
+    public Result listByCondition(@RequestBody CommentRequest commentRequest) {
+        PageHelper.startPage(commentRequest.getPageNo(), commentRequest.getPageSize());
+        List<Comment> list = commentService.listByCondition(commentRequest);
         PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genSuccessResult(pageInfo);
     }

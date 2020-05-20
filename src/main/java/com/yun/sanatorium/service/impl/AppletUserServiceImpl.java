@@ -2,12 +2,15 @@ package com.yun.sanatorium.service.impl;
 
 import com.yun.sanatorium.dao.AppletUserMapper;
 import com.yun.sanatorium.model.entity.AppletUser;
+import com.yun.sanatorium.model.request.AppletUserRequest;
 import com.yun.sanatorium.service.AppletUserService;
 import com.yun.sanatorium.core.AbstractService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @title:AppletUserServiceImpl
@@ -22,4 +25,11 @@ public class AppletUserServiceImpl extends AbstractService<AppletUser> implement
     @Resource
     private AppletUserMapper appletUserMapper;
 
+    @Override
+    public List<AppletUser> findByAppleUser(AppletUserRequest appletUserRequest) {
+        AppletUser appletUser = new AppletUser();
+        BeanUtils.copyProperties(appletUserRequest, appletUser);
+        List<AppletUser> appletUsers = appletUserMapper.findByAppleUser(appletUser);
+        return appletUsers;
+    }
 }

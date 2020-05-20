@@ -17,5 +17,6 @@
     <result column="create_time" jdbcType="VARCHAR" property="createTime" />
     <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
+    <result column="comment_type" jdbcType="VARCHAR" property="commentType" />
   </resultMap>
 </mapper>

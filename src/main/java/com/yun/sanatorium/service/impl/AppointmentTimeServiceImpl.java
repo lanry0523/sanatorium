@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @title:AppointmentTimeServiceImpl
@@ -22,4 +23,19 @@ public class AppointmentTimeServiceImpl extends AbstractService<AppointmentTime>
     @Resource
     private AppointmentTimeMapper appointmentTimeMapper;
 
+    @Override
+    public Integer batchInsert(List<AppointmentTime> appointmentTimes) {
+
+        return appointmentTimeMapper.batchInsert(appointmentTimes);
+    }
+
+    @Override
+    public int deleteByAtId(String atId) {
+        return appointmentTimeMapper.deleteByAtId(atId);
+    }
+
+    @Override
+    public List<AppointmentTime> findByAtId(String atId) {
+        return appointmentTimeMapper.findByAtId(atId);
+    }
 }

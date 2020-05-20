@@ -11,7 +11,8 @@
     <result column="number" jdbcType="INTEGER" property="number" />
     <result column="amount_available" jdbcType="VARCHAR" property="amountAvailable" />
     <result column="coupon_amount" jdbcType="VARCHAR" property="couponAmount" />
-    <result column="effective_time" jdbcType="VARCHAR" property="effectiveTime" />
+    <result column="effective_time_start" jdbcType="VARCHAR" property="effectiveTimeStart" />
+    <result column="effective_time_end" jdbcType="VARCHAR" property="effectiveTimeEnd" />
     <result column="points" jdbcType="INTEGER" property="points" />
     <result column="sort" jdbcType="INTEGER" property="sort" />
     <result column="is_receive" jdbcType="INTEGER" property="isReceive" />

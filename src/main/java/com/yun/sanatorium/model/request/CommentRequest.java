@@ -1,11 +1,13 @@
-package com.yun.sanatorium.model.entity;
+package com.yun.sanatorium.model.request;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import java.io.Serializable;
 
 @Data
-public class Comment {
+public class CommentRequest extends BaseRequest implements Serializable {
     @Id
     private String id;
 

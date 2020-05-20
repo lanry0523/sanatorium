@@ -3,9 +3,15 @@ package com.yun.sanatorium.web;
 import com.yun.sanatorium.core.Result;
 import com.yun.sanatorium.core.ResultGenerator;
 import com.yun.sanatorium.model.entity.CouponUser;
+import com.yun.sanatorium.model.request.CouponUserRequest;
+import com.yun.sanatorium.service.AppletUserService;
+import com.yun.sanatorium.service.CouponService;
 import com.yun.sanatorium.service.CouponUserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.AliasFor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -13,7 +19,7 @@ import java.util.List;
 
 /**
  * @title:CouponUserController
- * @description:**表controller层接口
+ * @description:用户优惠券关联表controller层接口
  * @author:CodeGenerator
  * @date:2020/05/13 17:53:20
  */
@@ -23,6 +29,8 @@ public class CouponUserController {
 
     @Resource
     private CouponUserService couponUserService;
+    @Autowired
+    private CouponService couponService;
 
     @PostMapping("/add")
     public Result add(@RequestBody CouponUser couponUser) {
@@ -49,10 +57,25 @@ public class CouponUserController {
     }
 
     @PostMapping("/list")
-    public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
-        PageHelper.startPage(page, size);
+    public Result list(@RequestBody CouponUserRequest request) {
+        PageHelper.startPage(request.getPageNo(), request.getPageSize());
         List<CouponUser> list = couponUserService.findAll();
         PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genSuccessResult(pageInfo);
+    }
+
+    /**
+     * 添加用户优惠券关联
+     * @param couponUserRequest
+     * @return
+     */
+    @PostMapping("/insertRelation")
+    public Result insertRelation(@RequestBody CouponUserRequest couponUserRequest) {
+        if (StringUtils.isBlank(couponUserRequest.getRelationId()) || StringUtils.isBlank(couponUserRequest.getUserId())) {
+            return ResultGenerator.genFailResult("用户id和优惠券id不能为空");
+        }
+
+        Integer insert = couponUserService.insertRelation(couponUserRequest);
+        return ResultGenerator.genSuccessResult();
     }
 }

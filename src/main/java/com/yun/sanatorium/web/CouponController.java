@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * @title:CouponController
- * @description:**表controller层接口
+ * @description:优惠券表controller层接口
  * @author:CodeGenerator
  * @date:2020/05/13 17:52:57
  */

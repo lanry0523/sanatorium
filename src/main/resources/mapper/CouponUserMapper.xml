@@ -10,5 +10,7 @@
     <result column="relation_id" jdbcType="VARCHAR" property="relationId" />
     <result column="create_time" jdbcType="VARCHAR" property="createTime" />
     <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="coupon_status" jdbcType="VARCHAR" property="couponStatus" />
+    <result column="coupon_end_time" jdbcType="VARCHAR" property="couponEndTime" />
   </resultMap>
 </mapper>

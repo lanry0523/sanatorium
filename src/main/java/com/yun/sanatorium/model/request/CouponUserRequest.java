@@ -1,15 +1,14 @@
-package com.yun.sanatorium.model.entity;
+package com.yun.sanatorium.model.request;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.io.Serializable;
 
-/**
- * 用户优惠券关联表
- */
 @Data
 @Table(name = "coupon_user")
-public class CouponUser {
+public class CouponUserRequest extends BaseRequest implements Serializable {
     /**
      * UUID
      */

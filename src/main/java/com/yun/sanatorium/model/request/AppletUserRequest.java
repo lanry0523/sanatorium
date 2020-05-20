@@ -1,15 +1,17 @@
-package com.yun.sanatorium.model.entity;
+package com.yun.sanatorium.model.request;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
- * 会员表
+ * 会员表request
  */
 @Data
-@Table(name = "applet_user")
-public class AppletUser {
+public class AppletUserRequest extends BaseRequest implements Serializable {
     @Id
     private String id;
 
@@ -75,7 +77,6 @@ public class AppletUser {
     /**
      * 用于刷新Access Token 的 Refresh Token
      */
-    @Column(name = "refresh_token")
     private String refreshToken;
 
     /**

@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -90,7 +91,10 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
                     result.setCode(ResultCode.NOT_FOUND).setMessage("接口 [" + request.getRequestURI() + "] 不存在");
                 } else if (e instanceof ServletException) {
                     result.setCode(ResultCode.FAIL).setMessage(e.getMessage());
-                } else {
+                } else if(e instanceof SQLException){
+                    result.setCode(ResultCode.INTERNAL_SERVER_ERROR).setMessage("接口 [" + request.getRequestURI() + "] 内部错误，请联系管理员");
+                }
+                else {
                     result.setCode(ResultCode.INTERNAL_SERVER_ERROR).setMessage("接口 [" + request.getRequestURI() + "] 内部错误，请联系管理员");
                     String message;
                     if (handler instanceof HandlerMethod) {

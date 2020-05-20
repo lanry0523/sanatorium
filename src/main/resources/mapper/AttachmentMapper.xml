@@ -35,7 +35,6 @@
         url,
         type,
         name,
-        stage_type,
         create_time,
         update_time
         )
@@ -69,5 +68,7 @@
         where relation_id = #{relationId}
         and type = #{type}
     </select>
+    <update id="updateFastDFSUrl" >
 
+    </update>
 </mapper>

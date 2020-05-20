@@ -1,8 +1,11 @@
 package com.yun.sanatorium.web;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.yun.sanatorium.core.Result;
 import com.yun.sanatorium.core.ResultGenerator;
 import com.yun.sanatorium.model.entity.Attachment;
+import com.yun.sanatorium.model.request.AttachmentRequest;
 import com.yun.sanatorium.service.AttachmentService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -11,6 +14,7 @@ import com.yun.sanatorium.utils.FastDFSClientUtils;
 import com.yun.sanatorium.utils.MultipartFileToFile;
 import com.yun.sanatorium.utils.Util;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,10 +35,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/attachment")
 public class AttachmentController {
-    //读取resource下fastDfs配置文件
-    final String FILE_SERVICE_URL = Thread.currentThread().getContextClassLoader().getResource("fdfs_client.properties").getPath();
-    //文件保存路径前部份
-    final String PATH = "http://39.100.70.223/";
+
     @Resource
     private AttachmentService attachmentService;
 
@@ -71,34 +72,22 @@ public class AttachmentController {
     }
 
     @RequestMapping(value = "/uploadFast", method = RequestMethod.POST)
-    public Result uploadFast(Attachment attachment,@RequestParam MultipartFile[] files) throws Exception {
-        // 1、把FastDFS提供的jar包添加到工程中
-        // 2、初始化全局配置。加载一个配置文件。
-        FastDFSClientUtils fastDFSClient = new FastDFSClientUtils(FILE_SERVICE_URL);
-        if(attachment.getType() == null || files == null){
+    public Result uploadFast(AttachmentRequest attachmentRequest, @RequestParam MultipartFile[] files)  {
+
+        if(attachmentRequest.getType() == null || files == null){
             return ResultGenerator.genFailResult(" type 或 files 参数不能为空");
         }
-        ArrayList<Attachment> attachments = new ArrayList<>();
-        for(MultipartFile file : files){
-            Attachment a = new Attachment();
-            File file1 = MultipartFileToFile.multipartFileToFile(file);
-            System.out.println(file1.getPath());
-            //上传文件
-            String filePath = fastDFSClient.uploadFile(file1.getPath());
-            //封装文件到Attachment对象里
-            if(!StringUtils.isBlank(filePath)){
-                String str = PATH + filePath;
-                a.setId(Util.getUUID());
-                a.setName(file1.getPath());
-                a.setType(attachment.getType());
-                a.setUrl(str);
-                a.setCreateTime(DateUtils.getCurrentTime());
-                a.setUpdateTime(DateUtils.getCurrentTime());
-                System.out.println("返回路径：" +PATH+filePath);
-                attachments.add(a);//
-            }
-            MultipartFileToFile.delteTempFile(file1);
-        }
+        List<Attachment> attachments = attachmentService.uploadFast(attachmentRequest, files);
         return ResultGenerator.genSuccessResult(attachments);
+    }
+    @RequestMapping(value = "/delete_file", method = RequestMethod.POST)
+    public Result delete_file(@RequestBody JSONObject jsonObject){
+        JSONArray attachmentList = jsonObject.getJSONArray("attachmentList");
+        List<Attachment> attachments = attachmentList.toJavaList(Attachment.class);
+        if (CollectionUtils.isEmpty(attachments)) {
+            return ResultGenerator.genFailResult("请检查图片信息！");
+        }
+        attachmentService.delete_file(attachments);
+        return ResultGenerator.genSuccessResult();
     }
 }

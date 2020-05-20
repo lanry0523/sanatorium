@@ -222,5 +222,8 @@ public class FastDFSClientUtils {
     }
 
     public static void main(String[] args) {
+        String str = "http://39.100.70.223/group1/M00/00/00/J2RG317En4OAR84nACDSOatBBzA698.png";
+        System.out.println(str.substring(21,27));
+        System.out.println(str.substring(21));
     }
 }

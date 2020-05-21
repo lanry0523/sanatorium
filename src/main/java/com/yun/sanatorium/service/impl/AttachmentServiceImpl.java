@@ -5,10 +5,7 @@ import com.yun.sanatorium.dao.AttachmentMapper;
 import com.yun.sanatorium.model.entity.Attachment;
 import com.yun.sanatorium.model.request.AttachmentRequest;
 import com.yun.sanatorium.service.AttachmentService;
-import com.yun.sanatorium.utils.DateUtils;
-import com.yun.sanatorium.utils.FastDFSClientUtils;
-import com.yun.sanatorium.utils.MultipartFileToFile;
-import com.yun.sanatorium.utils.Util;
+import com.yun.sanatorium.utils.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -29,10 +26,7 @@ import java.util.List;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class AttachmentServiceImpl extends AbstractService<Attachment> implements AttachmentService {
-    //读取resource下fastDfs配置文件
-     final String FILE_SERVICE_URL = Thread.currentThread().getContextClassLoader().getResource("fdfs_client.properties").getPath();
-    //文件保存路径前部份
-     final   String PATH = "http://39.100.70.223/";
+
     @Resource
     private AttachmentMapper attachmentMapper;
 
@@ -61,7 +55,7 @@ public class AttachmentServiceImpl extends AbstractService<Attachment> implement
         try{
             // 1、把FastDFS提供的jar包添加到工程中
             // 2、初始化全局配置。加载一个配置文件。
-            FastDFSClientUtils fastDFSClient = new FastDFSClientUtils(FILE_SERVICE_URL);
+            FastDFSClientUtils fastDFSClient = new FastDFSClientUtils(FastDFSUtils.FILE_SERVICE_URL);
             Attachment attachment = new Attachment();
             BeanUtils.copyProperties(attachment,attachmentRequest);
             for(MultipartFile file : files){
@@ -72,14 +66,14 @@ public class AttachmentServiceImpl extends AbstractService<Attachment> implement
                 String filePath = fastDFSClient.uploadFile(file1.getPath());
                 //封装文件到Attachment对象里
                 if(!StringUtils.isBlank(filePath)){
-                    String str = PATH + filePath;
+                    String str = FastDFSUtils.PATH + filePath;
                     a.setId(Util.getUUID());
                     a.setName(file1.getPath());
                     a.setType(attachment.getType());
                     a.setUrl(str);
                     a.setCreateTime(DateUtils.getCurrentTime());
                     a.setUpdateTime(DateUtils.getCurrentTime());
-                    System.out.println("返回路径：" +PATH+filePath);
+                    System.out.println("返回路径：" +FastDFSUtils.PATH+filePath);
                     attachments.add(a);//
                 }
                 MultipartFileToFile.delteTempFile(file1);
@@ -98,7 +92,7 @@ public class AttachmentServiceImpl extends AbstractService<Attachment> implement
     @Override
     public Integer delete_file(List<Attachment> attachments) {
         try {
-            FastDFSClientUtils fastDFSClient = new FastDFSClientUtils(FILE_SERVICE_URL);
+            FastDFSClientUtils fastDFSClient = new FastDFSClientUtils(FastDFSUtils.FILE_SERVICE_URL);
             if(attachments.size() > 0){
                 for (Attachment at :attachments ) {
                     fastDFSClient.delete_file(at.getUrl().substring(21));//删除服务器文件
@@ -114,7 +108,7 @@ public class AttachmentServiceImpl extends AbstractService<Attachment> implement
     @Override
     public void updateFastDFS(AttachmentRequest attachmentRequest, MultipartFile[] files) {
         try{
-            FastDFSClientUtils fastDFSClient = new FastDFSClientUtils(FILE_SERVICE_URL);
+            FastDFSClientUtils fastDFSClient = new FastDFSClientUtils(FastDFSUtils.FILE_SERVICE_URL);
             Attachment attachment = new Attachment();
             BeanUtils.copyProperties(attachment,attachmentRequest);
             List<Attachment> selectAt = attachmentMapper.select(attachment);
@@ -133,7 +127,7 @@ public class AttachmentServiceImpl extends AbstractService<Attachment> implement
                 String filePath = fastDFSClient.uploadFile(file1.getPath());
                 //封装文件到Attachment对象里
                 if(!StringUtils.isBlank(filePath)){
-                    String str = PATH + filePath;
+                    String str = FastDFSUtils.PATH + filePath;
                     a.setId(Util.getUUID());
                     a.setName(file1.getPath());
                     a.setRelationId(attachment.getRelationId());

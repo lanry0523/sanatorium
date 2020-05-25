@@ -71,6 +71,12 @@ public class AttachmentController {
         return ResultGenerator.genSuccessResult(pageInfo);
     }
 
+    /**
+     * 上传图片批量、单笔
+     * @param attachmentRequest
+     * @param files
+     * @return
+     */
     @RequestMapping(value = "/uploadFast", method = RequestMethod.POST)
     public Result uploadFast(AttachmentRequest attachmentRequest, @RequestParam MultipartFile[] files)  {
 
@@ -80,6 +86,12 @@ public class AttachmentController {
         List<Attachment> attachments = attachmentService.uploadFast(attachmentRequest, files);
         return ResultGenerator.genSuccessResult(attachments);
     }
+
+    /**
+     * 删除文件，批量，单笔
+     * @param jsonObject
+     * @return
+     */
     @RequestMapping(value = "/delete_file", method = RequestMethod.POST)
     public Result delete_file(@RequestBody JSONObject jsonObject){
         JSONArray attachmentList = jsonObject.getJSONArray("attachmentList");
@@ -88,6 +100,21 @@ public class AttachmentController {
             return ResultGenerator.genFailResult("请检查图片信息！");
         }
         attachmentService.delete_file(attachments);
+        return ResultGenerator.genSuccessResult();
+    }
+
+    /**
+     * 修改图片
+     * @param attachmentRequest
+     * @param files
+     * @return
+     */
+    @RequestMapping(value = "/updateFastDFS", method = RequestMethod.POST)
+    public Result updateFastDFS(AttachmentRequest attachmentRequest, @RequestParam MultipartFile[] files){
+        if(StringUtils.isBlank(attachmentRequest.getRelationId()) || attachmentRequest.getType() == null || files == null){
+            return ResultGenerator.genFailResult("relationId, type 或 files 参数不能为空");
+        }
+        attachmentService.updateFastDFS(attachmentRequest,files);
         return ResultGenerator.genSuccessResult();
     }
 }

@@ -155,6 +155,7 @@ public class AppletUserController {
             appletUser.setStatus(0);
             appletUser.setHeadimgurl(avatarUrl);
             appletUserService.save(appletUser);
+            return ResultGenerator.genSuccessResult(appletUser);
         }else {
             System.out.println("用户已存在");
             //已存在
@@ -165,8 +166,8 @@ public class AppletUserController {
             user.setAccessToken(accessToken);
             user.setHeadimgurl(avatarUrl);
             appletUserService.update(user);
+            return ResultGenerator.genSuccessResult(user);
         }
-        return ResultGenerator.genSuccessResult(userInfo);
     }
 
     /**

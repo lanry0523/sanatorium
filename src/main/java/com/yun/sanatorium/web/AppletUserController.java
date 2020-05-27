@@ -12,6 +12,7 @@ import com.yun.sanatorium.model.entity.AppletUser;
 import com.yun.sanatorium.model.request.AppletUserRequest;
 import com.yun.sanatorium.service.AppletUserService;
 import com.yun.sanatorium.utils.Constant;
+import com.yun.sanatorium.utils.HttpUtil;
 import com.yun.sanatorium.utils.Util;
 import lombok.extern.log4j.Log4j;
 import org.springframework.web.bind.annotation.*;
@@ -141,6 +142,7 @@ public class AppletUserController {
         String province = rawDataJson.getString( "province" );
         String accessToken = access_token.getString("access_token");
         if(user==null){
+            //第一次登 陆
             AppletUser appletUser = new AppletUser();
             appletUser.setId(Util.getUUID());
             appletUser.setOpenId(openid);
@@ -167,6 +169,11 @@ public class AppletUserController {
         return ResultGenerator.genSuccessResult(userInfo);
     }
 
+    /**
+     * 请求小程序登陆接口
+     * @param code
+     * @return
+     */
     public static JSONObject getSessionKeyOrOpenId(String code){
         //微信端登录code
         String wxCode = code;
@@ -182,6 +189,13 @@ public class AppletUserController {
         return jsonObject;
     }
 
+    /**
+     * 解密用户加密码信息
+     * @param encryptedData
+     * @param sessionKey
+     * @param iv
+     * @return
+     */
     public static JSONObject getUserInfo(String encryptedData,String sessionKey,String iv){
         // 被加密的数据
         byte[] dataByte = Base64.decode(encryptedData);
@@ -233,10 +247,17 @@ public class AppletUserController {
         return null;
     }
 
+    /**
+     * 请求http
+     * @param requestUrl
+     * @param requestMethod
+     * @param outputStr
+     * @return
+     */
     public static JSONObject httpsRequestToJsonObject(String requestUrl, String requestMethod, String outputStr) {
         JSONObject jsonObject = null;
         try {
-            StringBuffer buffer = httpsRequest(requestUrl, requestMethod, outputStr);
+            StringBuffer buffer = HttpUtil.httpsRequest(requestUrl, requestMethod, outputStr);
             jsonObject = JSONObject.parseObject(buffer.toString());
         } catch (ConnectException ce) {
             System.err.println("请求连接超时"+ce);
@@ -246,34 +267,5 @@ public class AppletUserController {
         return jsonObject;
     }
 
-    private static StringBuffer httpsRequest(String requestUrl, String requestMethod, String output)
-            throws NoSuchAlgorithmException, NoSuchProviderException, KeyManagementException, MalformedURLException,
-            IOException, ProtocolException, UnsupportedEncodingException {
-        URL realUrl = new URL(requestUrl);
-        HttpsURLConnection connection = (HttpsURLConnection) realUrl.openConnection();
-        connection.setDoOutput(true);
-        connection.setDoInput(true);
-        connection.setUseCaches(false);
-        connection.setRequestMethod(requestMethod);
-        if (null != output) {
-            OutputStream outputStream = connection.getOutputStream();
-            outputStream.write(output.getBytes("UTF-8"));
-            outputStream.close();
-        }
-        // 从输入流读取返回内容
-        InputStream inputStream = connection.getInputStream();
-        InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "utf-8");
-        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-        String str = null;
-        StringBuffer buffer = new StringBuffer();
-        while ((str = bufferedReader.readLine()) != null) {
-            buffer.append(str);
-        }
-        bufferedReader.close();
-        inputStreamReader.close();
-        inputStream.close();
-        inputStream = null;
-        connection.disconnect();
-        return buffer;
-    }
+
 }

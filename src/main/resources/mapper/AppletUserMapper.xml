@@ -22,6 +22,13 @@
         <result column="status" jdbcType="INTEGER" property="status"/>
     </resultMap>
 
+    <select id="getOne" resultMap="BaseResultMap"
+            parameterType="com.yun.sanatorium.model.entity.AppletUser">
+        select *from applet_user
+        <where>
+            open_id = #{openId}
+        </where>
+    </select>
     <select id="findByAppleUser" resultMap="BaseResultMap"
             parameterType="com.yun.sanatorium.model.request.AppletUserRequest">
     select *from applet_user

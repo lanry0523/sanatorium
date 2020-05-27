@@ -55,7 +55,7 @@ public class AttachmentServiceImpl extends AbstractService<Attachment> implement
         try{
             // 1、把FastDFS提供的jar包添加到工程中
             // 2、初始化全局配置。加载一个配置文件。
-            FastDFSClientUtils fastDFSClient = new FastDFSClientUtils(FastDFSUtils.FILE_SERVICE_URL);
+            FastDFSClientUtils fastDFSClient = new FastDFSClientUtils(Constant.FILE_SERVICE_URL);
             Attachment attachment = new Attachment();
             BeanUtils.copyProperties(attachment,attachmentRequest);
             for(MultipartFile file : files){
@@ -66,14 +66,14 @@ public class AttachmentServiceImpl extends AbstractService<Attachment> implement
                 String filePath = fastDFSClient.uploadFile(file1.getPath());
                 //封装文件到Attachment对象里
                 if(!StringUtils.isBlank(filePath)){
-                    String str = FastDFSUtils.PATH + filePath;
+                    String str = Constant.PATH + filePath;
                     a.setId(Util.getUUID());
                     a.setName(file1.getPath());
                     a.setType(attachment.getType());
                     a.setUrl(str);
                     a.setCreateTime(DateUtils.getCurrentTime());
                     a.setUpdateTime(DateUtils.getCurrentTime());
-                    System.out.println("返回路径：" +FastDFSUtils.PATH+filePath);
+                    System.out.println("返回路径：" +Constant.PATH+filePath);
                     attachments.add(a);//
                 }
                 MultipartFileToFile.delteTempFile(file1);
@@ -92,7 +92,7 @@ public class AttachmentServiceImpl extends AbstractService<Attachment> implement
     @Override
     public Integer delete_file(List<Attachment> attachments) {
         try {
-            FastDFSClientUtils fastDFSClient = new FastDFSClientUtils(FastDFSUtils.FILE_SERVICE_URL);
+            FastDFSClientUtils fastDFSClient = new FastDFSClientUtils(Constant.FILE_SERVICE_URL);
             if(attachments.size() > 0){
                 for (Attachment at :attachments ) {
                     fastDFSClient.delete_file(at.getUrl().substring(21));//删除服务器文件
@@ -108,7 +108,7 @@ public class AttachmentServiceImpl extends AbstractService<Attachment> implement
     @Override
     public void updateFastDFS(AttachmentRequest attachmentRequest, MultipartFile[] files) {
         try{
-            FastDFSClientUtils fastDFSClient = new FastDFSClientUtils(FastDFSUtils.FILE_SERVICE_URL);
+            FastDFSClientUtils fastDFSClient = new FastDFSClientUtils(Constant.FILE_SERVICE_URL);
             Attachment attachment = new Attachment();
             BeanUtils.copyProperties(attachment,attachmentRequest);
             List<Attachment> selectAt = attachmentMapper.select(attachment);
@@ -127,7 +127,7 @@ public class AttachmentServiceImpl extends AbstractService<Attachment> implement
                 String filePath = fastDFSClient.uploadFile(file1.getPath());
                 //封装文件到Attachment对象里
                 if(!StringUtils.isBlank(filePath)){
-                    String str = FastDFSUtils.PATH + filePath;
+                    String str = Constant.PATH + filePath;
                     a.setId(Util.getUUID());
                     a.setName(file1.getPath());
                     a.setRelationId(attachment.getRelationId());

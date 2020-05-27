@@ -32,4 +32,11 @@ public class AppletUserServiceImpl extends AbstractService<AppletUser> implement
         List<AppletUser> appletUsers = appletUserMapper.findByAppleUser(appletUser);
         return appletUsers;
     }
+
+    @Override
+    public AppletUser getOne(AppletUserRequest appletUserRequest) {
+        AppletUser user = new AppletUser();
+        BeanUtils.copyProperties(appletUserRequest,user);
+        return appletUserMapper.getOne(user);
+    }
 }

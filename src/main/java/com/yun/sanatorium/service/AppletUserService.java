@@ -19,4 +19,5 @@ public interface AppletUserService extends Service<AppletUser> {
      * @return
      */
     List<AppletUser> findByAppleUser(AppletUserRequest appletUserRequest);
+    AppletUser getOne(AppletUserRequest appletUserRequest);
 }

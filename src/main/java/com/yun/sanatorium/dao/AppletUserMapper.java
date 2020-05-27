@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface AppletUserMapper extends Mapper<AppletUser> {
     List<AppletUser> findByAppleUser(AppletUser appletUser);
+    AppletUser getOne(AppletUser appletUser);
 }

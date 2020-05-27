@@ -45,6 +45,11 @@
             </exclusions>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>1.65</version>
+        </dependency>
         <!-- fastDFS 依赖包-->
         <dependency>
             <groupId>org.csource</groupId>

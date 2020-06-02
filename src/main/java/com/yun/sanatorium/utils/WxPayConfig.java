@@ -12,6 +12,8 @@ public class WxPayConfig {
     public static final String mch_id = "";
     //微信支付的商户密钥
     public static final String key = "";
+    //充值成功后的服务器回调url
+    public static final String recharge_notify_url = "http://39.100.70.223:8080/pay/rechargeNotify";
     //支付成功后的服务器回调url
     public static final String notify_url = "http://39.100.70.223:8080/pay/wxNotify";
     //签名方式

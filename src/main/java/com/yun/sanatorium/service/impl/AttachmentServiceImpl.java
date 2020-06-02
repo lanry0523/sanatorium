@@ -70,6 +70,7 @@ public class AttachmentServiceImpl extends AbstractService<Attachment> implement
                     a.setId(Util.getUUID());
                     a.setName(file1.getPath());
                     a.setType(attachment.getType());
+                    a.setRelationId(attachment.getRelationId());
                     a.setUrl(str);
                     a.setCreateTime(DateUtils.getCurrentTime());
                     a.setUpdateTime(DateUtils.getCurrentTime());

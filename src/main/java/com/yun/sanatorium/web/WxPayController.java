@@ -56,7 +56,12 @@ public class WxPayController {
             packageParams.put("out_trade_no", orderNo);//商户订单号
             packageParams.put("total_fee", money);//支付金额，这边需要转成字符串类型，否则后面的签名会失败
             packageParams.put("spbill_create_ip", spbill_create_ip);
-            packageParams.put("notify_url", WxPayConfig.notify_url);
+            if("充值".equals(wxPayRequest.getPayType())){
+                packageParams.put("notify_url", WxPayConfig.notify_url);
+            }else{
+                packageParams.put("notify_url", WxPayConfig.notify_url);
+            }
+
             packageParams.put("trade_type", WxPayConfig.TRADETYPE);
             packageParams.put("openid", wxPayRequest.getOpenid());
 
@@ -117,7 +122,7 @@ public class WxPayController {
     }
 
     /**
-     * @Description:微信支付
+     * @Description:支付回调
      * @return
      * @author dzg
      * @throws Exception
@@ -150,7 +155,7 @@ public class WxPayController {
 //                order.setState(OrderState.IN_PAYMENT.getCode());
 //                Integer i = orderService.update(order);
                 logger.info("支付回调报文：{"+map+"}");
-
+                //支付回调成功扣除
                 /**此处添加自己的业务逻辑代码end**/
 
                 //通知微信服务器已经支付成功
@@ -170,5 +175,58 @@ public class WxPayController {
         out.flush();
         out.close();
     }
+    /**
+     * @Description:充值回调
+     * @return
+     * @author dzg
+     * @throws Exception
+     * @throws
+     * @date 2018年7月17日
+     */
+    @RequestMapping(value="/rechargeNotify")
+    public void rechargeNotify(HttpServletRequest request,HttpServletResponse response) throws Exception{
+        BufferedReader br = new BufferedReader(new InputStreamReader((ServletInputStream)request.getInputStream()));
+        String line = null;
+        StringBuilder sb = new StringBuilder();
+        while((line = br.readLine())!=null){
+            sb.append(line);
+        }
+        br.close();
+        //sb为微信返回的xml
+        String notityXml = sb.toString();
+        String resXml = "";
+        System.out.println("接收到的报文：" + notityXml);
 
+        Map map = PayUtil.doXMLParse(notityXml);
+
+        String returnCode = (String) map.get("return_code");
+        if("SUCCESS".equals(returnCode)){
+            //验证签名是否正确
+            if(PayUtil.verify(PayUtil.createLinkString(map), (String)map.get("sign"), WxPayConfig.key, "utf-8")){
+                /**此处添加自己的业务逻辑代码start**/
+//                Order order = new Order();
+//                order.setId(wxPayRequest.getOut_trade_no());
+//                order.setState(OrderState.IN_PAYMENT.getCode());
+//                Integer i = orderService.update(order);
+                logger.info("充值回调报文：{"+map+"}");
+                //支付回调成功扣除
+                /**此处添加自己的业务逻辑代码end**/
+
+                //通知微信服务器已经支付成功
+                resXml = "<xml>" + "<return_code><![CDATA[SUCCESS]]></return_code>"
+                        + "<return_msg><![CDATA[OK]]></return_msg>" + "</xml> ";
+            }
+        }else{
+            resXml = "<xml>" + "<return_code><![CDATA[FAIL]]></return_code>"
+                    + "<return_msg><![CDATA[报文为空]]></return_msg>" + "</xml> ";
+        }
+        System.out.println(resXml);
+        System.out.println("微信支付回调数据结束");
+
+        BufferedOutputStream out = new BufferedOutputStream(
+                response.getOutputStream());
+        out.write(resXml.getBytes());
+        out.flush();
+        out.close();
+    }
 }

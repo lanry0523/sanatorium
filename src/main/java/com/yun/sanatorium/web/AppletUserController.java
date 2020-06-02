@@ -155,9 +155,11 @@ public class AppletUserController {
             appletUser.setAccessToken(accessToken);
             appletUser.setStatus(0);
             appletUser.setHeadimgurl(avatarUrl);
-            appletUserService.save(appletUser);
-            appletUser.setAccessToken("");
-            appletUser.setOpenId("");
+            int i = appletUserService.save(appletUser);
+            if(i > 0){
+                //新用户优惠券
+
+            }
             return ResultGenerator.genSuccessResult(appletUser);
         }else {
             System.out.println("用户已存在");

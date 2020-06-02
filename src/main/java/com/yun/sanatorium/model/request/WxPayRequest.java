@@ -16,4 +16,5 @@ public class WxPayRequest implements Serializable {
     private String notify_url;
     private String trade_type;
     private String openid;
+    private String payType;//支付类型
 }

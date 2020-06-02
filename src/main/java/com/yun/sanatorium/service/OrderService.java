@@ -1,8 +1,12 @@
 package com.yun.sanatorium.service;
 
+import com.github.pagehelper.PageInfo;
 import com.yun.sanatorium.model.entity.Order;
 import com.yun.sanatorium.core.Service;
+import com.yun.sanatorium.model.request.OrderRequest;
 import org.apache.ibatis.exceptions.TooManyResultsException;
+
+import java.util.List;
 
 /**
  * @title:OrderService
@@ -12,4 +16,5 @@ import org.apache.ibatis.exceptions.TooManyResultsException;
  */
 public interface OrderService extends Service<Order> {
     Order getOne(String id);
+    PageInfo<Order> getPage(OrderRequest orderRequest);
 }

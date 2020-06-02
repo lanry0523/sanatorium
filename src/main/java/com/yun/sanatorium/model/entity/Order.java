@@ -85,6 +85,8 @@ public class Order {
      */
     private Integer state;
 
+    private String userName;
+
     /**
      * 获取UUID
      *
@@ -335,5 +337,13 @@ public class Order {
      */
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

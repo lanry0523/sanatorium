@@ -1,13 +1,18 @@
 package com.yun.sanatorium.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.yun.sanatorium.dao.OrderMapper;
 import com.yun.sanatorium.model.entity.Order;
+import com.yun.sanatorium.model.request.OrderRequest;
 import com.yun.sanatorium.service.OrderService;
 import com.yun.sanatorium.core.AbstractService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @title:OrderServiceImpl
@@ -25,5 +30,15 @@ public class OrderServiceImpl extends AbstractService<Order> implements OrderSer
     @Override
     public Order getOne(String id) {
         return orderMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public PageInfo<Order> getPage(OrderRequest orderRequest) {
+        PageHelper.startPage(orderRequest.getPageNo(),orderRequest.getPageSize());
+        Order order = new Order();
+        BeanUtils.copyProperties(orderRequest,order);
+        List<Order> list = orderMapper.getPage(order);
+        PageInfo pageInfo = new PageInfo(list);
+        return pageInfo;
     }
 }

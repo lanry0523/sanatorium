@@ -4,6 +4,7 @@ import com.yun.sanatorium.core.Result;
 import com.yun.sanatorium.core.ResultGenerator;
 import com.yun.sanatorium.model.entity.Order;
 import com.yun.sanatorium.model.entity.OrderUser;
+import com.yun.sanatorium.model.request.OrderRequest;
 import com.yun.sanatorium.service.OrderService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -39,15 +40,11 @@ public class OrderController {
         order.setUpdateTime(DateUtils.getCurrentTime());
         int i = orderService.save(order);
         if(i > 0){
-            //用户关联订单表添加
-            OrderUser orderUser = new OrderUser();
-            orderUser.setId(Util.getUUID());
-            orderUser.setOrderId(order.getId());
-            orderUser.setCreateTime(DateUtils.getCurrentTime());
-            orderUser.setUpdateTime(DateUtils.getCurrentTime());
-            orderUserService.save(orderUser);
+            Order one = orderService.getOne(order.getId());
+            return ResultGenerator.genSuccessResult(one);
+        }else{
+            return ResultGenerator.genFailResult("订单生成失败");
         }
-        return ResultGenerator.genSuccessResult();
     }
 
     @PostMapping("/delete")
@@ -68,11 +65,10 @@ public class OrderController {
         return ResultGenerator.genSuccessResult(order);
     }
 
-    @PostMapping("/list")
-    public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
-        PageHelper.startPage(page, size);
-        List<Order> list = orderService.findAll();
-        PageInfo pageInfo = new PageInfo(list);
-        return ResultGenerator.genSuccessResult(pageInfo);
+    @PostMapping("/getPage")
+    public Result list(OrderRequest orderRequest,HttpServletRequest request) {
+        PageHelper.startPage(orderRequest.getPageNo(), orderRequest.getPageSize());
+        PageInfo<Order> page = orderService.getPage(orderRequest);
+        return ResultGenerator.genSuccessResult(page);
     }
 }

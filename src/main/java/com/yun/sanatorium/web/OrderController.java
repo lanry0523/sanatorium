@@ -12,6 +12,7 @@ import com.yun.sanatorium.service.OrderUserService;
 import com.yun.sanatorium.utils.DateUtils;
 import com.yun.sanatorium.utils.LoginUserUtils;
 import com.yun.sanatorium.utils.Util;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -34,11 +35,12 @@ public class OrderController {
     @Resource
     private OrderUserService orderUserService;
     @PostMapping("/add")
-    public Result add(@RequestBody Order order, HttpServletRequest request) {
+    public Result add(@RequestBody OrderRequest order, HttpServletRequest request) {
         order.setId(Util.getUUID());
         order.setCreateTime(DateUtils.getCurrentTime());
         order.setUpdateTime(DateUtils.getCurrentTime());
-        int i = orderService.save(order);
+
+        int i = orderService.insert(order);
         if(i > 0){
             Order one = orderService.getOne(order.getId());
             return ResultGenerator.genSuccessResult(one);

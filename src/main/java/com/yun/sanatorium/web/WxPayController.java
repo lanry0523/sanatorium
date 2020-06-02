@@ -36,12 +36,12 @@ public class WxPayController {
             //生成的随机字符串
             String nonce_str = StringUtils.getRandomStringByLength(32);
             //商品名称
-            String body = "测试商品名称";
+            String body = wxPayRequest.getBody();
             //获取本机的ip地址
             String spbill_create_ip = IpUtils.getIpAddr(request);
 
-            String orderNo = "L123456788";
-            String money = "0.01";//支付金额，单位：分，这边需要转成字符串类型，否则后面的签名会失败
+            String orderNo = wxPayRequest.getOut_trade_no();
+            String money = wxPayRequest.getTotal_fee();//支付金额，单位：分，这边需要转成字符串类型，否则后面的签名会失败
 
             Map<String, String> packageParams = new HashMap<String, String>();
             packageParams.put("appid", WxPayConfig.appid);

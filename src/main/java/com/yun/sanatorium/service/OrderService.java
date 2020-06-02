@@ -17,4 +17,5 @@ import java.util.List;
 public interface OrderService extends Service<Order> {
     Order getOne(String id);
     PageInfo<Order> getPage(OrderRequest orderRequest);
+    int insert(OrderRequest orderRequest);
 }

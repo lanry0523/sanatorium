@@ -35,10 +35,15 @@ public class OrderServiceImpl extends AbstractService<Order> implements OrderSer
     @Override
     public PageInfo<Order> getPage(OrderRequest orderRequest) {
         PageHelper.startPage(orderRequest.getPageNo(),orderRequest.getPageSize());
-        Order order = new Order();
-        BeanUtils.copyProperties(orderRequest,order);
-        List<Order> list = orderMapper.getPage(order);
+        List<Order> list = orderMapper.getPage(orderRequest);
         PageInfo pageInfo = new PageInfo(list);
         return pageInfo;
+    }
+
+    @Override
+    public int insert(OrderRequest orderRequest) {
+        Order order = new Order();
+        BeanUtils.copyProperties(orderRequest,order);
+        return orderMapper.insert(order);
     }
 }

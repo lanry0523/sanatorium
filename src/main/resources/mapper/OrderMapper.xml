@@ -36,7 +36,7 @@
   </sql>
 
   <select id="getPage" parameterType="com.yun.sanatorium.model.request.OrderRequest" resultMap="BaseResultMap">
-    select * from order
+    select * from orders
     where
     1 = 1
     <include refid="select_condition"/>

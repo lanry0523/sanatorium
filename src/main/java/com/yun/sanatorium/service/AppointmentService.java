@@ -15,4 +15,6 @@ public interface AppointmentService extends Service<Appointment> {
     Integer appointmentInsert(AppointmentRequest request);
 
     Integer appointmentUpdate(AppointmentRequest request);
+
+    Integer appointmentDelete(String id);
 }

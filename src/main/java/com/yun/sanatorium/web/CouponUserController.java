@@ -1,5 +1,6 @@
 package com.yun.sanatorium.web;
 
+import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import com.yun.sanatorium.core.Result;
 import com.yun.sanatorium.core.ResultGenerator;
 import com.yun.sanatorium.model.entity.CouponUser;
@@ -10,6 +11,7 @@ import com.yun.sanatorium.service.CouponUserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.web.bind.annotation.*;
@@ -29,32 +31,6 @@ public class CouponUserController {
 
     @Resource
     private CouponUserService couponUserService;
-    @Autowired
-    private CouponService couponService;
-
-    @PostMapping("/add")
-    public Result add(@RequestBody CouponUser couponUser) {
-        couponUserService.save(couponUser);
-        return ResultGenerator.genSuccessResult();
-    }
-
-    @PostMapping("/delete")
-    public Result delete(@RequestParam String id) {
-        couponUserService.deleteByPrimaryKey(id);
-        return ResultGenerator.genSuccessResult();
-    }
-
-    @PostMapping("/update")
-    public Result update(CouponUser couponUser) {
-        couponUserService.update(couponUser);
-        return ResultGenerator.genSuccessResult();
-    }
-
-    @PostMapping("/detail")
-    public Result detail(@RequestParam String id) {
-        CouponUser couponUser = couponUserService.findById(id);
-        return ResultGenerator.genSuccessResult(couponUser);
-    }
 
     @PostMapping("/list")
     public Result list(@RequestBody CouponUserRequest request) {
@@ -66,6 +42,7 @@ public class CouponUserController {
 
     /**
      * 添加用户优惠券关联
+     *
      * @param couponUserRequest
      * @return
      */
@@ -78,4 +55,19 @@ public class CouponUserController {
         Integer insert = couponUserService.insertRelation(couponUserRequest);
         return ResultGenerator.genSuccessResult();
     }
+
+    /**
+     * 条件查询优惠券
+     *
+     * @param request
+     * @return
+     */
+    @PostMapping("/selectConditions")
+    public Result selectConditions(@RequestBody CouponUserRequest request) {
+        PageHelper.startPage(request.getPageNo(), request.getPageSize());
+        List<CouponUser> list = couponUserService.selectConditions(request);
+        PageInfo pageInfo = new PageInfo(list);
+        return ResultGenerator.genSuccessResult(pageInfo);
+    }
+
 }

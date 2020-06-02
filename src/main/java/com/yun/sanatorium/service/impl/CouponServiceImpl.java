@@ -22,4 +22,8 @@ public class CouponServiceImpl extends AbstractService<Coupon> implements Coupon
     @Resource
     private CouponMapper couponMapper;
 
+    @Override
+    public Coupon selectOne(Coupon request) {
+        return couponMapper.selectOne(request);
+    }
 }

@@ -3,13 +3,20 @@ package com.yun.sanatorium.web;
 import com.yun.sanatorium.core.Result;
 import com.yun.sanatorium.core.ResultGenerator;
 import com.yun.sanatorium.model.entity.Order;
+import com.yun.sanatorium.model.entity.OrderUser;
 import com.yun.sanatorium.service.OrderService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yun.sanatorium.service.OrderUserService;
+import com.yun.sanatorium.utils.DateUtils;
+import com.yun.sanatorium.utils.LoginUserUtils;
+import com.yun.sanatorium.utils.Util;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @title:OrderController
@@ -23,10 +30,23 @@ public class OrderController {
 
     @Resource
     private OrderService orderService;
-
+    @Resource
+    private OrderUserService orderUserService;
     @PostMapping("/add")
-    public Result add(@RequestBody Order order) {
-        orderService.save(order);
+    public Result add(@RequestBody Order order, HttpServletRequest request) {
+        order.setId(Util.getUUID());
+        order.setCreateTime(DateUtils.getCurrentTime());
+        order.setUpdateTime(DateUtils.getCurrentTime());
+        int i = orderService.save(order);
+        if(i > 0){
+            //用户关联订单表添加
+            OrderUser orderUser = new OrderUser();
+            orderUser.setId(Util.getUUID());
+            orderUser.setOrderId(order.getId());
+            orderUser.setCreateTime(DateUtils.getCurrentTime());
+            orderUser.setUpdateTime(DateUtils.getCurrentTime());
+            orderUserService.save(orderUser);
+        }
         return ResultGenerator.genSuccessResult();
     }
 

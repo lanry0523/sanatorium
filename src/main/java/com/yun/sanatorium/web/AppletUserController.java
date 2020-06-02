@@ -26,6 +26,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.net.ssl.HttpsURLConnection;
+import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.net.ConnectException;
 import java.net.MalformedURLException;
@@ -168,8 +169,7 @@ public class AppletUserController {
             user.setAccessToken(accessToken);
             user.setHeadimgurl(avatarUrl);
             appletUserService.update(user);
-            user.setAccessToken("");
-            user.setOpenId("");
+
             return ResultGenerator.genSuccessResult(user);
         }
     }
@@ -183,12 +183,6 @@ public class AppletUserController {
         //微信端登录code
         String wxCode = code;
         String requestUrl = "https://api.weixin.qq.com/sns/jscode2session?appid="+Constant.APP_ID+"&secret="+Constant.APP_SECRET+"&js_code="+wxCode+"&grant_type=authorization_code";
-        Map<String,String> requestUrlParam = new HashMap<String, String>(  );
-        requestUrlParam.put( "appid", Constant.APP_ID );//小程序appId
-        requestUrlParam.put( "secret",Constant.APP_SECRET );
-        requestUrlParam.put( "js_code",wxCode );//小程序端返回的code
-        requestUrlParam.put( "grant_type","authorization_code" );//默认参数
-
         //发送post请求读取调用微信接口获取openid用户唯一标识
         JSONObject jsonObject = httpsRequestToJsonObject(requestUrl, "GET", null);
         return jsonObject;
@@ -272,5 +266,10 @@ public class AppletUserController {
         return jsonObject;
     }
 
+    @GetMapping("/getOne")
+    public Result getOne(AppletUserRequest appletUserRequest, HttpServletRequest request){
+        AppletUser user = appletUserService.getOne(appletUserRequest);
+        return ResultGenerator.genSuccessResult(user);
+    }
 
 }

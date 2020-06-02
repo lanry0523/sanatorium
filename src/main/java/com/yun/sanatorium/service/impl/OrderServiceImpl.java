@@ -22,4 +22,8 @@ public class OrderServiceImpl extends AbstractService<Order> implements OrderSer
     @Resource
     private OrderMapper orderMapper;
 
+    @Override
+    public Order getOne(String id) {
+        return orderMapper.selectByPrimaryKey(id);
+    }
 }

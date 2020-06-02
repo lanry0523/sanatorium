@@ -2,6 +2,7 @@ package com.yun.sanatorium.service;
 
 import com.yun.sanatorium.model.entity.Order;
 import com.yun.sanatorium.core.Service;
+import org.apache.ibatis.exceptions.TooManyResultsException;
 
 /**
  * @title:OrderService
@@ -10,4 +11,5 @@ import com.yun.sanatorium.core.Service;
  * @date:2020/05/13 17:54:18
  */
 public interface OrderService extends Service<Order> {
+    Order getOne(String id);
 }

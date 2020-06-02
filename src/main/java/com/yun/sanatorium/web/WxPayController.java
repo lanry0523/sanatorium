@@ -1,11 +1,15 @@
 package com.yun.sanatorium.web;
 
+import com.yun.sanatorium.common.OrderState;
 import com.yun.sanatorium.core.Result;
 import com.yun.sanatorium.core.ResultGenerator;
+import com.yun.sanatorium.model.entity.Order;
 import com.yun.sanatorium.model.request.WxPayRequest;
+import com.yun.sanatorium.service.OrderService;
 import com.yun.sanatorium.utils.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +26,8 @@ import java.util.Map;
 @RequestMapping("/pay")
 public class WxPayController {
     private static Logger logger = LoggerFactory.getLogger(WxPayController.class);
-
+    @Autowired
+    private OrderService orderService;
     /**
      * @Description: 发起微信支付
      * @param wxPayRequest
@@ -67,16 +72,14 @@ public class WxPayController {
             //拼接统一下单接口使用的xml数据，要将上一步生成的签名一起拼接进去
             String xml = PayUtil.mapToXml(packageParams);
 
-            logger.info("调试模式_统一下单接口 请求XML数据：" + xml);
+            logger.info("request ：｛" +packageParams+"｝");
 
             //调用统一下单接口，并接受返回的结果
             String result = PayUtil.httpRequest(WxPayConfig.pay_url, "POST", xml);
 
-            System.out.println("调试模式_统一下单接口 返回XML数据：" + PayUtil.doXMLParse(result));
-
             // 将解析结果存储在HashMap中
             Map map = PayUtil.doXMLParse(result);
-
+            logger.info("response ：｛" +packageParams+"｝");
             String return_code = (String) map.get("return_code");//返回状态码
 
             //返回给移动端需要的参数
@@ -95,8 +98,13 @@ public class WxPayController {
                 logger.info("=======================第二次签名：" + paySign + "=====================");
 
                 response.put("paySign", paySign);
-                //更新订单信息
+                //更新订单信息 预下单成功等待用户付款
                 //业务逻辑代码
+                Order order = new Order();
+                order.setId(wxPayRequest.getOut_trade_no());
+                order.setState(OrderState.IN_PAYMENT.getCode());
+                Integer i = orderService.update(order);
+                logger.info("预支付订单生成成功，修改订单状态：【"+i+"】");
             }else{
                 return ResultGenerator.genFailResult(map.get("return_msg").toString());
             }
@@ -137,7 +145,11 @@ public class WxPayController {
             //验证签名是否正确
             if(PayUtil.verify(PayUtil.createLinkString(map), (String)map.get("sign"), WxPayConfig.key, "utf-8")){
                 /**此处添加自己的业务逻辑代码start**/
-
+//                Order order = new Order();
+//                order.setId(wxPayRequest.getOut_trade_no());
+//                order.setState(OrderState.IN_PAYMENT.getCode());
+//                Integer i = orderService.update(order);
+                logger.info("支付回调报文：{"+map+"}");
 
                 /**此处添加自己的业务逻辑代码end**/
 

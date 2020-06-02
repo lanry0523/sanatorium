@@ -22,6 +22,8 @@
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
   </resultMap>
   <sql id="select_condition">
+    <if test="state != null and state != ''">AND state = #{state}
+    </if>
     <if test="userName != null and userName != ''">AND user_name LIKE CONCAT(CONCAT('%',
       #{userName}), '%')
     </if>

@@ -77,7 +77,7 @@ public class OrderRequest extends BaseRequest{
     /**
      * 订单状态
      */
-    private Integer state;
+    private String state;
 
     private String userName;
 

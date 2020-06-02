@@ -74,7 +74,7 @@ public class Order {
      * 支付方式
      */
     @Column(name = "payment_type")
-    private Integer paymentType;
+    private String paymentType;
 
     /**
      * 服务人员

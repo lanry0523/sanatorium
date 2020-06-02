@@ -67,7 +67,7 @@ public class OrderRequest extends BaseRequest{
     /**
      * 支付方式
      */
-    private Integer paymentType;
+    private String paymentType;
 
     /**
      * 服务人员

@@ -16,9 +16,9 @@
     <result column="project_time" jdbcType="VARCHAR" property="projectTime" />
     <result column="create_time" jdbcType="VARCHAR" property="createTime" />
     <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
-    <result column="payment_type" jdbcType="INTEGER" property="paymentType" />
+    <result column="payment_type" jdbcType="VARCHAR" property="paymentType" />
     <result column="personal_id" jdbcType="VARCHAR" property="personalId" />
-    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
   </resultMap>
   <sql id="select_condition">

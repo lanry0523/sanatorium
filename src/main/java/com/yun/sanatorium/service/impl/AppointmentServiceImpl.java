@@ -19,7 +19,7 @@ import java.util.List;
 
 /**
  * @title:AppointmentTimeServiceImpl
- * @description:**表service层接口实现类
+ * @description: 表service层接口实现类
  * @author:CodeGenerator
  * @date:2020/05/13 17:52:06
  */
@@ -34,6 +34,7 @@ public class AppointmentServiceImpl extends AbstractService<Appointment> impleme
 
     /**
      * 预约时间添加
+     *
      * @param request
      * @return
      */
@@ -48,6 +49,7 @@ public class AppointmentServiceImpl extends AbstractService<Appointment> impleme
         Integer insert = 0;
         if (null != appointmentTimes && appointmentTimes.size() > 0) {
             for (AppointmentTime appointmentTime : appointmentTimes) {
+                appointmentTime.setName(request.getName());
                 appointmentTime.setId(Util.getUUID());
                 appointmentTime.setAtId(uuid);
             }
@@ -58,6 +60,7 @@ public class AppointmentServiceImpl extends AbstractService<Appointment> impleme
 
     /**
      * 预约时间修改
+     *
      * @param request
      * @return
      */
@@ -68,14 +71,23 @@ public class AppointmentServiceImpl extends AbstractService<Appointment> impleme
         int update = appointmentMapper.updateByPrimaryKey(appointment);
         List<AppointmentTime> appointmentTimes = request.getAppointmentTimes();
         Integer insert = 0;
+        appointmentTimeService.deleteByAtId(request.getId());
         if (null != appointmentTimes && appointmentTimes.size() > 0) {
-            appointmentTimeService.deleteByAtId(request.getId());
             for (AppointmentTime appointmentTime : appointmentTimes) {
+                appointmentTime.setName(request.getName());
                 appointmentTime.setId(Util.getUUID());
                 appointmentTime.setAtId(request.getId());
             }
             insert = appointmentTimeService.batchInsert(appointmentTimes);
         }
         return update + insert;
+    }
+
+    @Override
+    public Integer appointmentDelete(String id) {
+        int delete = appointmentMapper.deleteByPrimaryKey(id);
+        int delete1 = appointmentTimeService.deleteByAtId(id);
+        return delete+delete1;
+
     }
 }

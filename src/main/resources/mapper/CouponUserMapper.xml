@@ -1,16 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yun.sanatorium.dao.CouponUserMapper">
-  <resultMap id="BaseResultMap" type="com.yun.sanatorium.model.entity.CouponUser">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="user_id" jdbcType="VARCHAR" property="userId" />
-    <result column="relation_id" jdbcType="VARCHAR" property="relationId" />
-    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
-    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
-    <result column="coupon_status" jdbcType="VARCHAR" property="couponStatus" />
-    <result column="coupon_end_time" jdbcType="VARCHAR" property="couponEndTime" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.yun.sanatorium.model.entity.CouponUser">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="relation_id" jdbcType="VARCHAR" property="relationId"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+        <result column="coupon_status" jdbcType="VARCHAR" property="couponStatus"/>
+        <result column="coupon_end_time" jdbcType="VARCHAR" property="couponEndTime"/>
+    </resultMap>
+    <!--使用优惠券-->
+    <update id="userCoupon" parameterType="java.lang.String">
+    update from user_coupon set coupon_status ="2" where id =#{id}
+  </update>
+
+    <select id="selectConditions" parameterType="com.yun.sanatorium.model.request.CouponUserRequest"
+    resultMap="BaseResultMap">
+        select * from coupon_user
+        <where>
+            <if test="couponStatus != null and couponStatus != '' ">and coupon_status = #{couponStatus}
+            </if>
+            <if test="couponEndTime != null and couponEndTime != '' ">and coupon_end_time = #{couponEndTime}
+            </if>
+            <if test="userId != null and userId != '' ">and user_id = #{userId}
+            </if>
+        </where>
+    </select>
 </mapper>

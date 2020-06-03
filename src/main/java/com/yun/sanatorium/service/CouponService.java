@@ -10,4 +10,5 @@ import com.yun.sanatorium.core.Service;
  * @date:2020/05/13 17:52:57
  */
 public interface CouponService extends Service<Coupon> {
+    Coupon selectOne(Coupon request);
 }

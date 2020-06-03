@@ -7,8 +7,6 @@ import com.yun.sanatorium.model.entity.AppointmentTime;
 import com.yun.sanatorium.model.request.AppointmentRequest;
 import com.yun.sanatorium.service.AppointmentService;
 import com.yun.sanatorium.service.AppointmentTimeService;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +16,7 @@ import java.util.List;
 
 /**
  * @title:AppointmentTimeController
- * @description:**表controller层接口
+ * @description:预约时间表controller层接口
  * @author:CodeGenerator
  * @date:2020/05/13 17:52:06
  */
@@ -30,39 +28,6 @@ public class AppointmentTimeController {
     private AppointmentTimeService appointmentTimeService;
     @Autowired
     private AppointmentService appointmentService;
-
-    @PostMapping("/add")
-    public Result add(@RequestBody AppointmentTime appointmentTime) {
-        appointmentTimeService.save(appointmentTime);
-        return ResultGenerator.genSuccessResult();
-    }
-
-    @PostMapping("/delete")
-    public Result delete(@RequestParam String id) {
-        appointmentTimeService.deleteByPrimaryKey(id);
-        return ResultGenerator.genSuccessResult();
-    }
-
-    @PostMapping("/update")
-    public Result update(AppointmentTime appointmentTime) {
-        appointmentTimeService.update(appointmentTime);
-        return ResultGenerator.genSuccessResult();
-    }
-
-    @PostMapping("/detail")
-    public Result detail(@RequestParam String id) {
-        AppointmentTime appointmentTime = appointmentTimeService.findById(id);
-        return ResultGenerator.genSuccessResult(appointmentTime);
-    }
-
-    @PostMapping("/list")
-    public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
-        PageHelper.startPage(page, size);
-        List<AppointmentTime> list = appointmentTimeService.findAll();
-        PageInfo pageInfo = new PageInfo(list);
-        return ResultGenerator.genSuccessResult(pageInfo);
-    }
-
     /**
      * 上班时间管理列表页面查询
      *
@@ -75,7 +40,7 @@ public class AppointmentTimeController {
     }
 
     /**
-     * 上班时间管理列表页面查询
+     * 上班时间管理详情页面查询
      *
      * @return
      */
@@ -100,7 +65,7 @@ public class AppointmentTimeController {
     }
 
     /**
-     * 上班时间管理列表页面添加
+     * 上班时间管理列表页面修改
      *
      * @return
      */
@@ -112,6 +77,22 @@ public class AppointmentTimeController {
         Integer insert = appointmentService.appointmentUpdate(request);
         if (insert < 0) {
             return ResultGenerator.genFailResult("添加失败");
+        }
+        return ResultGenerator.genSuccessResult();
+    }
+    /**
+     * 上班时间管理列表页面删除
+     *
+     * @return
+     */
+    @PostMapping("/appointmentDelete")
+    public Result appointmentDelete(@RequestBody AppointmentRequest request) {
+        if (StringUtils.isBlank(request.getId())) {
+            return ResultGenerator.genFailResult("id不能为空");
+        }
+        Integer delete = appointmentService.appointmentDelete(request.getId());
+        if (delete < 0) {
+            return ResultGenerator.genFailResult("删除失败");
         }
         return ResultGenerator.genSuccessResult();
     }

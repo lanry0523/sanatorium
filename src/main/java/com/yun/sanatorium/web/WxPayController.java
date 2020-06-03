@@ -3,13 +3,18 @@ package com.yun.sanatorium.web;
 import com.yun.sanatorium.common.OrderState;
 import com.yun.sanatorium.core.Result;
 import com.yun.sanatorium.core.ResultGenerator;
+import com.yun.sanatorium.model.entity.AppletUser;
 import com.yun.sanatorium.model.entity.Order;
+import com.yun.sanatorium.model.request.AppletUserRequest;
 import com.yun.sanatorium.model.request.WxPayRequest;
+import com.yun.sanatorium.service.AppletUserService;
 import com.yun.sanatorium.service.OrderService;
 import com.yun.sanatorium.utils.*;
+import lombok.var;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +34,40 @@ public class WxPayController {
     private static Logger logger = LoggerFactory.getLogger(WxPayController.class);
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private AppletUserService appletUserService;
+    /**
+     * 余额支付
+     * @param wxPayRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/pay")
+    public Result pay(WxPayRequest wxPayRequest ,HttpServletRequest request){
+        if(StringUtils.isBlank(wxPayRequest.getUserId()) || StringUtils.isBlank(wxPayRequest.getTotal_fee())){
+            return ResultGenerator.genFailResult("用户id或金额为空");
+        }
+        AppletUserRequest appletUserRequest = new AppletUserRequest();
+        appletUserRequest.setId(wxPayRequest.getUserId());
+        AppletUser au = appletUserService.getOne(appletUserRequest);
+        AppletUser appletUser = new AppletUser();
+        appletUser.setId(wxPayRequest.getUserId());
+        //现有余额减去支付余额
+        BigDecimal num1 = new BigDecimal(au.getBalance());
+        BigDecimal num2 = new BigDecimal(wxPayRequest.getTotal_fee());
+        appletUser.setBalance(String.valueOf(num1.subtract(num2).doubleValue()));
+        int i = appletUserService.update(appletUser);
+        if(i > 0){
+            Order order = new Order();
+            order.setId(wxPayRequest.getOut_trade_no());
+            order.setState(OrderState.PAID.getCode());
+            orderService.update(order);
+            return ResultGenerator.genSuccessResult();
+        }else{
+            return  ResultGenerator.genFailResult("余额支付失败");
+        }
+    }
+
     /**
      * @Description: 发起微信支付
      * @param wxPayRequest

@@ -4,9 +4,9 @@ package com.yun.sanatorium.common;
  * 订单支付状态
  */
 public enum OrderState {
-    UNPAID("P00","未付款"),
-    IN_PAYMENT("P01","付款中"),
-    PAID("P02","已付款"),
+    UNPAID("P00","未支付"),
+    IN_PAYMENT("P01","支付中"),
+    PAID("P02","已支付"),
     COMPLETED("P03","已完成"),
     CANCELLED("P04","已取消"),
     PAY_AT_THE_STORE("P05","到店支付");
